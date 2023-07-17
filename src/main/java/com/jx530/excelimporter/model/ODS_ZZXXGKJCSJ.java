@@ -1,19 +1,25 @@
 package com.jx530.excelimporter.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * 学校基本数据子类表
  */
 @Data
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(callSuper = true)
 public class ODS_ZZXXGKJCSJ extends BaseModel {
+
     @ExcelProperty("*学校代码")
     @NotEmpty(message = "学校代码不能为空")
     @Pattern(regexp = "\\d{10}", message = "学校代码格式不正确，要求10位数字码")
