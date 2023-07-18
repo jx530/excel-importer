@@ -8,9 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("upload")
 public class UploadProps {
-
+    private String clientId;
     private String username;
     private String password;
     private String appKey;
-
 }

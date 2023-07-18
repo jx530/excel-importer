@@ -11,3 +11,10 @@ Content-Type: application/octet-stream
 
 < ./test-excel/表1：学校基本数据子类表_导入模板.xlsx
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+POST http://202.205.188.198:9000/prod-api4/api/web/auth/login/interface/oauth
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=3636000538&username=jxsyyxxfoin&password=mhxdivsv2t

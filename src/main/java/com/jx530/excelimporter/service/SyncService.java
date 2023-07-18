@@ -52,7 +52,7 @@ public class SyncService {
         Progress progress = sync.getProgress();
         LocalDateTime current = progress.getCurrent();
 
-        CommonResult<LoginResponse> login = httpApi.login("password", uploadProps.getAppKey(), uploadProps.getUsername(), uploadProps.getPassword());
+        CommonResult<LoginResponse> login = httpApi.login("password", uploadProps.getClientId(), uploadProps.getUsername(), uploadProps.getPassword());
         Assert.isTrue(login.getCode() == 200, "登录失败");
         LoginResponse loginResponse = login.getData();
         SM4 sm4 = new SM4(loginResponse.getAppSecret().getBytes(StandardCharsets.UTF_8));

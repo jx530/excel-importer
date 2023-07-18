@@ -15,8 +15,7 @@ export const syncData = async (id) => {
                         case "queue":
                         case "progress":
                             const { progress, response } = parsedData.data;
-                            const { progress: { current, latest } } = progress
-                            setProgress({ current, latest })
+                            setProgress(progress)
                             if (response) {
                                 setResps((resp) => [...resp, response]);
                             }
@@ -30,10 +29,14 @@ export const syncData = async (id) => {
                     }
                 };
             })
-            const { current, latest } = progress;
+            const { type, progress: { current, latest } = {} } = progress
             return <Space direction="vertical">
-                {current && latest ? <div>{current}/{latest}</div> : null}
-                {resps.length ? resps.map(r => <div>{r}</div>) : null}
+                {type ? <div>{type.title}正在同步中...</div> : null}
+                {current && latest ? <div>当前进度：{current} / {latest}</div> : null}
+                <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
+                    <div>上传日志</div>
+                    {resps.length ? resps.map(r => <div>{JSON.stringify(r)}</div>) : null}
+                </div>
             </Space>
         }
         const modal = Modal.confirm({
