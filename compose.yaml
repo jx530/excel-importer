@@ -4,8 +4,8 @@ services:
     ports:
       - '5432'
     environment:
-      - 'POSTGRES_USER=excelUser'
-      - 'POSTGRES_DB=excel'
-      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_DB=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
     #volumes:
     #  - ./postgres:/docker-entrypoint-initdb.d/

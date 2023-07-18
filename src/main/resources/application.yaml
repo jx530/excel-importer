@@ -2,6 +2,13 @@ server:
   port: 8080
 spring:
   datasource:
-    username: excelUser
-    password: secret
-    url: jdbc:postgresql://localhost:5432/excel
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  jpa:
+    hibernate:
+      ddl-auto: update
