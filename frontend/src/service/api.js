@@ -5,7 +5,3 @@ const sync = () => ajax("/sync");
 export async function list(page, size) {
     return (await sync().query({ page, size }).get()).json();
 }
-
-export async function updateSync(id) {
-    return (await sync().path(id).payload(true).post()).json();
-}

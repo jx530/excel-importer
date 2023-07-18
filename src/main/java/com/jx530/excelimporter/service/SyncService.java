@@ -2,6 +2,7 @@ package com.jx530.excelimporter.service;
 
 import cn.hutool.crypto.symmetric.SM4;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jx530.excelimporter.config.UploadProps;
 import com.jx530.excelimporter.dao.BaseModifiableDao;
 import com.jx530.excelimporter.dao.SyncProgressDao;
 import com.jx530.excelimporter.dto.CommonResult;
@@ -41,6 +42,7 @@ public class SyncService {
     BeanFactory beanFactory;
     HttpApi httpApi;
     ObjectMapper objectMapper;
+    UploadProps uploadProps;
 
     @SneakyThrows
     public void runSyncTask(SyncProgress sync, Consumer<SyncResponse> consumer) {
@@ -50,12 +52,12 @@ public class SyncService {
         Progress progress = sync.getProgress();
         LocalDateTime current = progress.getCurrent();
 
-        CommonResult<LoginResponse> login = httpApi.login("refresh_token", "", "", "refresh_token");
+        CommonResult<LoginResponse> login = httpApi.login("refresh_token", uploadProps.getAppKey(), uploadProps.getUsername(), uploadProps.getPassword());
         Assert.isTrue(login.getCode() == 200, "登录失败");
         LoginResponse loginResponse = login.getData();
         SM4 sm4 = new SM4(loginResponse.getAppSecret().getBytes(StandardCharsets.UTF_8));
         List<? extends BaseModel> batch;
-        while (!CollectionUtils.isEmpty(batch = dao.findTop100ByModifiedBetween(current, LocalDateTime.now()))) {
+        while (!CollectionUtils.isEmpty(batch = dao.findTop100By__modifiedBetween(current, LocalDateTime.now()))) {
             var req = new UploadRequest<>(syncTable.name(), batch);
             String json = objectMapper.writeValueAsString(req);
             UploadHeaders headers = new UploadHeaders(loginResponse, json);
@@ -63,7 +65,7 @@ public class SyncService {
             UploadResponse resp = httpApi.uploadData(headers.asMap(), request);
             progress.setCurrent(batch.stream().map(BaseModel::get__modified).max(Comparator.naturalOrder()).get());
             sync = syncProgressDao.save(sync);
-            consumer.accept(new SyncResponse(sync,resp));
+            consumer.accept(new SyncResponse(sync, resp));
         }
     }
 

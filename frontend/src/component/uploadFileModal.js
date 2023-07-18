@@ -39,7 +39,6 @@ export const uploadFile = async (type) => {
             closable: true,
             width: 600,
             footer: null,
-            className: "exporter-modal",
             content: <ModelContent />
         })
     })

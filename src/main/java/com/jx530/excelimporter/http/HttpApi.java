@@ -12,26 +12,26 @@ import retrofit2.http.Query;
 
 import java.util.Map;
 
-@RetrofitClient(baseUrl = "${test.baseUrl}")
+@RetrofitClient(baseUrl = "${upload.baseUrl}")
 public interface HttpApi {
 
-    @POST("/api/web/auth/login/interface/oauth")
+    @POST("/prod-api4/api/web/auth/login/interface/oauth")
     CommonResult<LoginResponse> login(@Query("grant_type") String grant_type,
                                       @Query("client_id") String client_id,
                                       @Query("username") String username,
                                       @Query("password") String password);
 
-    @POST("/api/web/auth/login/interface/refresh")
+    @POST("/prod-api4/api/web/auth/login/interface/refresh")
     CommonResult<LoginResponse> refreshToken(@Query("grant_type") String grant_type,
                                              @Query("client_id") String client_id,
                                              @Query("client_secret") String client_secret,
                                              @Query("refresh_token") String refresh_token);
 
-    @POST("/api/web/convergence/collect/interface/saveInterfaceData")
+    @POST("/prod-api4/api/web/convergence/collect/interface/saveInterfaceData")
     UploadResponse uploadData(@HeaderMap Map<String, String> headers,
                               @Body UploadEncryptRequest requestBody);
 
-    @POST("/api/web/convergence/collect/interface/getResultsByTime")
+    @POST("/prod-api4/api/web/convergence/collect/interface/getResultsByTime")
     UploadResponse uploadResult(@HeaderMap Map<String, String> headers,
                                 @Body UploadEncryptRequest requestBody);
 

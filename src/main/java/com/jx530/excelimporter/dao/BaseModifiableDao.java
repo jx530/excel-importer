@@ -11,5 +11,5 @@ public interface BaseModifiableDao<T extends BaseModel> {
     @Query("select max(__modified) from #{#entityName}")
     LocalDateTime findMaxModified();
 
-    List<T> findTop100ByModifiedBetween(LocalDateTime step, LocalDateTime now);
+    List<T> findTop100By__modifiedBetween(LocalDateTime step, LocalDateTime now);
 }

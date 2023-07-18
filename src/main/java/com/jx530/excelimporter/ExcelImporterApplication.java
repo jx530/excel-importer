@@ -3,6 +3,7 @@ package com.jx530.excelimporter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -25,6 +26,7 @@ public class ExcelImporterApplication {
         SpringApplication.run(ExcelImporterApplication.class, args);
     }
 
+    @Bean
     public ExecutorService sseMvcExecutor() {
         return Executors.newSingleThreadExecutor();
     }

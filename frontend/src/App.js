@@ -2,7 +2,8 @@ import { Button, Space, Table } from "antd";
 import { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { uploadFile } from "./component/uploadFileModal";
-import { list, updateSync } from "./service/api";
+import { syncData } from "./component/syncDataModal";
+import { list } from "./service/api";
 
 function App() {
   const [query, setQuery] = useState({
@@ -55,8 +56,7 @@ function App() {
           uploadFile(record.type);
         }
         const handleSync = async () => {
-          await updateSync(record.id);
-          fetchData();
+          syncData(record.id);
         }
         return (
           <Space>

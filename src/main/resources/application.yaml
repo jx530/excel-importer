@@ -12,3 +12,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+upload:
+  baseUrl: http://202.205.188.198:9000
+  username: jxsyyxxfoin
+  password: mhxdivsv2t
+  appKey: nUwdjZrD

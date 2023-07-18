@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SyncResponse {
 
     SyncProgress progress;
-    UploadResponse uploadResponse;
+    UploadResponse response;
 
 }
