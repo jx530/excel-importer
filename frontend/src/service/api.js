@@ -6,6 +6,6 @@ export async function list(page, size) {
     return (await sync().query({ page, size }).get()).json();
 }
 
-export async function update(payload) {
-    return (await sync().payload(payload).post()).json();
+export async function updateSync(id) {
+    return (await sync().path(id).payload(true).post()).json();
 }

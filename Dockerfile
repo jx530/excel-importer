@@ -1,4 +1,4 @@
-FROM 20-jdk
+FROM 17-jdk
 
 COPY target/excel-importer-0.0.1-SNAPSHOT.jar /app.jar
 

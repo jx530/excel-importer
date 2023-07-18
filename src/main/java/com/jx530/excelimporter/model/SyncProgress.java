@@ -1,6 +1,8 @@
 package com.jx530.excelimporter.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -64,9 +66,12 @@ public class SyncProgress {
         };
     }
 
-    public interface Progress {
-        LocalDateTime getCurrent();
-
-        LocalDateTime getLatest();
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Progress {
+        LocalDateTime current;
+        LocalDateTime latest;
     }
 }

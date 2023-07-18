@@ -1,7 +1,7 @@
 import { message } from "antd";
 import _ from "lodash";
 
-export const BASE_URL = "/api";
+export const BASE_URL = process.env.REACT_APP_API_BASE_URL || '/';
 
 function absoluteUrl(url, params) {
   url = _.first(url) === "/" ? url : "/" + url;
