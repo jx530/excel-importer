@@ -91,15 +91,19 @@ public class SyncProgressController {
 
     @SneakyThrows
     private void invokeSync(SseEmitter emitter, SyncProgress finalSyncItem) {
-        syncService.runSyncTask(finalSyncItem, (syncResp) -> {
-            try {
-                emitter.send(event().data(
-                        SSEResponse.builder().type("progress").data(syncResp).build(),
-                        MediaType.APPLICATION_JSON));
-            } catch (IOException e) {
-                emitter.completeWithError(e);
-            }
-        });
+        try {
+            syncService.runSyncTask(finalSyncItem, (syncResp) -> {
+                try {
+                    emitter.send(event().data(
+                            SSEResponse.builder().type("progress").data(syncResp).build(),
+                            MediaType.APPLICATION_JSON));
+                } catch (IOException e) {
+                    emitter.completeWithError(e);
+                }
+            });
+        } catch (Exception e) {
+            emitter.completeWithError(e);
+        }
         emitter.send(event().data(SSEResponse.builder().type("finish").data("数据同步完成").build(),
                 MediaType.APPLICATION_JSON));
     }
