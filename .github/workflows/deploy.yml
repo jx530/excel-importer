@@ -29,7 +29,7 @@ jobs:
       run: npm install && npm run build
       working-directory: 'frontend'
     - name: Copy Build File
-      run: pwd && ls && cp frontend/build/* src/main/resources/static/
+      run: mkdir -p src/main/resources/static/ && cp frontend/build/* src/main/resources/static/
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
