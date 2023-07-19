@@ -14,6 +14,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  HOSTNAME: 192.168.2.104
+  MODULE: jx530-excel-importer
+
 jobs:
   build:
 
@@ -39,6 +43,30 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to Dockerhub Registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{secrets.DOCKER_REGISTRY_USERNAME}}
+        password: ${{secrets.DOCKER_REGISTRY_PASSWD}}
+    - name: Build and push image
+      uses: docker/build-push-action@v3
+      with:
+        context: ./
+        push: true
+        tags: holmofy/${{env.MODULE}}:latest
+
+    - name: Install ssh-key
+      uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+      with:
+        ssh-private-key: ${{ secrets.ID_RSA }}
+        ssh-host: ${{env.HOSTNAME}}
+    - name: Deploy Server
+      run: |
+        echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-add ~/.ssh/id_rsa
+        ssh-keyscan -t rsa $HOSTNAME >> ~/.ssh/known_hosts
+        scp -i ~/.ssh/id_rsa -r ./docker-compose.yaml root@$HOSTNAME:docker-compose.yaml
+        ssh -i ~/.ssh/id_rsa root@$HOSTNAME "docker pull holmofy/$MODULE:latest;docker-compose up -d $MODULE"
