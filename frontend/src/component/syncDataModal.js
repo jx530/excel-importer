@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export const syncData = async (id) => {
     const events = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/sync/${id}`);
-    return new Promise((resolve) => {
+    return new Promise(() => {
         const ModelContent = () => {
             const [progress, setProgress] = useState({});
             const [resps, setResps] = useState([]);

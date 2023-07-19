@@ -13,7 +13,7 @@ const errorColumns = [{
 }];
 
 export const uploadFile = async (type) => {
-    return new Promise((resolve) => {
+    return new Promise(() => {
         const ModelContent = () => {
             const [errors, setErrors] = useState();
             return <Space direction="vertical">
