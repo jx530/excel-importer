@@ -39,7 +39,7 @@ export const syncData = async (id) => {
                 </div>
             </Space>
         }
-        const modal = Modal.confirm({
+        Modal.confirm({
             title: '数据同步中',
             closable: true,
             width: 600,
